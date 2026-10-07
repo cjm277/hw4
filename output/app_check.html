@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Customs: App Check (Problem 11)</title>
+    <style>
+      :root {
+        --navy: #00356b;
+        --navy-deep: #0a1f3d;
+        --royal: #2456d3;
+        --powder: #b9d4f1;
+        --powder-soft: #e8f1fb;
+        --off-white: #f7f5ef;
+        --text: #1b2434;
+        --muted: #5d6779;
+        --border: rgba(10, 31, 61, 0.14);
+        --green: #1b7f3b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: var(--navy-deep);
+        line-height: 1.6;
+      }
+      .page {
+        max-width: 960px;
+        margin: 0 auto;
+        background: var(--off-white);
+        min-height: 100vh;
+        box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
+      }
+      header {
+        background: linear-gradient(135deg, var(--navy-deep), var(--navy) 70%, var(--royal));
+        color: #fff;
+        padding: 2.25rem 2.5rem 2rem;
+      }
+      header .eyebrow {
+        color: var(--powder);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      header h1 {
+        margin: 0.35rem 0 0.5rem;
+        font-size: 2rem;
+        letter-spacing: -0.02em;
+      }
+      header p {
+        margin: 0;
+        color: #d8e5f5;
+        max-width: 70ch;
+      }
+      main {
+        padding: 2rem 2.5rem 3rem;
+      }
+      h2 {
+        color: var(--navy);
+        font-size: 1.45rem;
+        letter-spacing: -0.015em;
+        margin: 0 0 0.35rem;
+      }
+      h3 {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        margin: 1.25rem 0 0.5rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: 0.92rem;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 0.55rem 0.8rem;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      th {
+        background: var(--powder-soft);
+        color: var(--navy);
+        font-weight: 700;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .pass {
+        display: inline-block;
+        padding: 0.1rem 0.6rem;
+        border-radius: 999px;
+        background: #e3f4e8;
+        color: var(--green);
+        font-weight: 800;
+        font-size: 0.8rem;
+      }
+      .check {
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 2px solid var(--powder);
+      }
+      .check-num {
+        display: inline-block;
+        background: var(--royal);
+        color: #fff;
+        font-weight: 800;
+        font-size: 0.8rem;
+        border-radius: 999px;
+        padding: 0.1rem 0.65rem;
+        margin-bottom: 0.4rem;
+      }
+      .steps {
+        color: var(--muted);
+        margin: 0.25rem 0 1rem;
+      }
+      figure {
+        margin: 1rem 0 0;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(10, 31, 61, 0.1);
+      }
+      figure a {
+        display: block;
+      }
+      figure a {
+        background: var(--navy-deep);
+      }
+      figure img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto; /* shown at native size (no upscaling blur) */
+      }
+      figcaption {
+        padding: 0.85rem 1.1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.95rem;
+      }
+      figcaption strong {
+        color: var(--navy);
+      }
+      .badge-orange,
+      .badge-red {
+        display: inline-block;
+        color: #fff;
+        font-weight: 800;
+        font-size: 0.78rem;
+        border-radius: 999px;
+        padding: 0.05rem 0.5rem;
+      }
+      .badge-orange {
+        background: #ef6c00;
+      }
+      .badge-red {
+        background: #d32f2f;
+      }
+      code {
+        background: var(--powder-soft);
+        border-radius: 5px;
+        padding: 0.05rem 0.35rem;
+        font-size: 0.88em;
+      }
+      .zero {
+        color: #d32f2f;
+        font-weight: 800;
+      }
+      .low {
+        color: #ef6c00;
+        font-weight: 800;
+      }
+      footer {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="eyebrow">MGT 409 · Homework 4 · Problem 11</div>
+        <h1>Campus Customs: App Check</h1>
+        <p>
+          Three checks of the running site (React front end, FastAPI + PydanticAI backend, and
+          <code style="background: rgba(255, 255, 255, 0.15); color: #fff">data/campus_customs.db</code>). Each check has a
+          screenshot from the live app, what it proves, and the matching database values. Click any screenshot to open it
+          full size.
+        </p>
+      </header>
+
+      <main>
+        <h2>Summary</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Check</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><a href="#check-1">Chat checks an item's inventory and price (honest numbers from the database)</a></td>
+              <td><span class="pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><a href="#check-2">Dynamic search-result cards appear after a category question ("What hoodies do you have?")</a></td>
+              <td><span class="pass">PASS</span></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><a href="#check-3">Usability feature from Problem 9: size-level stock badges on product cards</a></td>
+              <td><span class="pass">PASS</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ================= CHECK 1 ================= -->
+        <section class="check" id="check-1">
+          <span class="check-num">Check 1</span>
+          <h2>Chat checks inventory and price from the database</h2>
+          <p class="steps">
+            <strong>Steps:</strong> Opened the <em>Baseball Left Chest Crewneck</em> item page, opened the chat, and asked:
+            <em>"How many Baseball Left Chest Crewnecks do you have in M and XL, and what do they cost?"</em>
+          </p>
+          <figure>
+            <a href="app_check_images/1-inventory-chat.jpg" target="_blank"
+              ><img
+                src="app_check_images/1-inventory-chat.jpg"
+                alt="Chat answering that the Baseball Left Chest Crewneck costs $58.00, has 5 left in M, and is sold out in XL"
+            /></a>
+            <figcaption>
+              <strong>What this proves:</strong> the agent answered <em>"costs $58.00. There are 5 left in M, and XL is sold
+              out (0 available)"</em>, exactly the price and per-size counts stored in the database (table below). The
+              item page's own size grid behind the chat shows the same numbers ("M · Only 5 left", "XS · Sold out"), so the
+              chat and the site agree.
+            </figcaption>
+          </figure>
+          <h3>Database values (catalogue + inventory)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>product_id</th>
+                <th>price</th>
+                <th>XS</th>
+                <th>S</th>
+                <th>M</th>
+                <th>L</th>
+                <th>XL</th>
+                <th>XXL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>baseball-left-chest-crewneck</code></td>
+                <td>$58.00</td>
+                <td class="zero">0</td>
+                <td>15</td>
+                <td class="low">5</td>
+                <td>25</td>
+                <td class="zero">0</td>
+                <td>25</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ================= CHECK 2 ================= -->
+        <section class="check" id="check-2">
+          <span class="check-num">Check 2</span>
+          <h2>Dynamic search-result cards after a category question</h2>
+          <p class="steps">
+            <strong>Steps:</strong> Started on the Home page, opened the chat, and asked <em>"What hoodies do you have?"</em>.
+            The site moved to the Products page by itself and filled it with the matching cards.
+          </p>
+          <figure>
+            <a href="app_check_images/2-hoodies-search-results.jpg" target="_blank"
+              ><img
+                src="app_check_images/2-hoodies-search-results.jpg"
+                alt="Chat reply listing hoodies with a 'See all 27 on the page' link, next to the Products page showing 'From your chat: Hoodies' and hoodie product cards"
+            /></a>
+            <figcaption>
+              <strong>What this proves:</strong> the agent searched the catalogue, replied with a short list ("We have 27
+              hoodies…"), and returned the structured matches, which the front end rendered on the page as "From your chat:
+              Hoodies · 27 matches" with real hoodie product cards (image, category, name) built from the database.
+            </figcaption>
+          </figure>
+          <h3>Database check</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Query</th>
+                <th>Database</th>
+                <th>Shown on the page</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Products in category <em>Hoodies</em></td>
+                <td>27</td>
+                <td>27 cards, all labelled HOODIES</td>
+              </tr>
+              <tr>
+                <td>First three results (A–Z)</td>
+                <td>Basic Hoodie Big Yale $68.00 · Brooks Brothers Double Knit Full Zip Hoodie Yale $88.00 · Champion Full Zip Hood $88.00</td>
+                <td>Same three items and prices, in the same order</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ================= CHECK 3 ================= -->
+        <section class="check" id="check-3">
+          <span class="check-num">Check 3</span>
+          <h2>Problem 9 usability feature: stock badges on product cards</h2>
+          <p class="steps">
+            <strong>Steps:</strong> Opened <em>Products</em> (all 102 items) and looked at the cards. Under each price,
+            <span class="badge-orange">Only a few left in …</span> lists the sizes with 5 or fewer units and
+            <span class="badge-red">Sold out in …</span> lists the sizes with none.
+          </p>
+          <figure>
+            <a href="app_check_images/3-stock-badges.jpg" target="_blank"
+              ><img
+                src="app_check_images/3-stock-badges.jpg"
+                alt="Three product cards with orange 'Only a few left in' and red 'Sold out in' badges below the price"
+            /></a>
+            <figcaption>
+              <strong>What this proves:</strong> the badges appear at the bottom of each card, below the price, and are
+              worked out per size from the live inventory. For example, the Baseball Left Chest Crewneck shows
+              <span class="badge-orange">Only a few left in M</span> and <span class="badge-red">Sold out in XS and XL</span>,
+              which matches its database row exactly.
+            </figcaption>
+          </figure>
+          <h3>Database values for the three cards shown</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>XS</th>
+                <th>S</th>
+                <th>M</th>
+                <th>L</th>
+                <th>XL</th>
+                <th>XXL</th>
+                <th>Badges shown</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025 Yale Vs Harvard T Shirt</td>
+                <td>25</td>
+                <td>25</td>
+                <td>20</td>
+                <td class="low">2</td>
+                <td>25</td>
+                <td>15</td>
+                <td><span class="badge-orange">Only a few left in L</span></td>
+              </tr>
+              <tr>
+                <td>Baseball Left Chest Crewneck</td>
+                <td class="zero">0</td>
+                <td>15</td>
+                <td class="low">5</td>
+                <td>25</td>
+                <td class="zero">0</td>
+                <td>25</td>
+                <td>
+                  <span class="badge-orange">Only a few left in M</span>
+                  <span class="badge-red">Sold out in XS and XL</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Basic Hoodie Big Yale</td>
+                <td>15</td>
+                <td class="low">5</td>
+                <td class="low">5</td>
+                <td>8</td>
+                <td class="low">2</td>
+                <td>25</td>
+                <td><span class="badge-orange">Only a few left in S, M and XL</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="steps" style="margin-top: 0.75rem">
+            Across the whole catalogue, 100 of 102 cards show badges: 71 orange (a product with a size at 1–5 units) and
+            77 red (a product with a sold-out size). These counts equal the database totals.
+          </p>
+        </section>
+
+        <footer>
+          <p>
+            <strong>How these were captured:</strong> October 6, 2026, with the backend running from <code>backend/</code>
+            (<code>uvicorn main:app --reload --port 8000</code>) on the live <code>campus_customs.db</code>. The front end
+            ran from the same <code>frontend/</code> code in a 1024px-wide browser window, as a guest shopper. The chat
+            answers come from the PydanticAI agent calling its database tools, and the database values in the tables were
+            queried directly from <code>campus_customs.db</code> at the same time.
+          </p>
+          <p>Screenshots: <code>output/app_check_images/</code> (linked above with relative paths).</p>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
