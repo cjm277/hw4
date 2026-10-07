@@ -44,6 +44,8 @@ Log of the prompts I typed into the vibe coder, one section per problem.
 
 ## Problem 3 — Build the Campus Customs website
 
+# follow up note: I corrected that files with no description included should show no description rather than a placeholder message; also validated that any errors identified were due to missing information, not a code mistake
+
 **Prompt:**
 
 > Sweet, now we're onto problem 3 called Build the Campus Customs website
@@ -105,6 +107,8 @@ Log of the prompts I typed into the vibe coder, one section per problem.
 ---
 
 ## Problem 5 — PydanticAI agent background
+
+# follow up note: my servers turned off so I had to restart them, then verified that the site was working again
 
 **Prompt:**
 
@@ -196,6 +200,8 @@ Log of the prompts I typed into the vibe coder, one section per problem.
 
 ## Problem 9 — Usability improvements
 
+# follow up note: I specified a change to the stock badges because I didn't like the v1 look
+
 **Prompt:**
 
 > Alright let's do problem 9 called Usability improvements
@@ -250,6 +256,8 @@ Log of the prompts I typed into the vibe coder, one section per problem.
 ---
 
 ## Problem 11 — Site testing (app check)
+
+# follow up note: I corrected the html because it originally showed two screenshots when the instructions requested one per check
 
 **Prompt:**
 
