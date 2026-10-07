@@ -61,6 +61,9 @@ class GuardResult:
 
     @property
     def needs_model(self) -> bool:
+        """False only when something was blanked out and too little is left to answer ("my card is [...]")."""
+        if not self.found:
+            return True  # nothing sensitive: always answer, however short ("hi", "any hoodies?")
         words = re.findall(r"[A-Za-z]{2,}", re.sub(r"\[[^\]]* removed\]", " ", self.text))
         return len(words) >= MIN_WORDS_FOR_MODEL
 
